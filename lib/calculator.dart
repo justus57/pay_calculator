@@ -15,8 +15,8 @@ class _pay_calculatorState extends State<pay_calculator> {
     final noOfHours = TextEditingController();
     final hourlyRate = TextEditingController();
     var size = MediaQuery.of(context).size;
-    var hrs;
-    var rate;
+    double hrs;
+    double rate;
     var taxcal;
     var pay;
     return Scaffold(
@@ -26,7 +26,7 @@ class _pay_calculatorState extends State<pay_calculator> {
         child: Column(
           children: [
             Text("Pay calculator",
-                style: TextStyle(fontSize: 30, color: Colors.black)),
+                style: TextStyle(fontSize: 30, color: Colors.black87)),
             SizedBox(
               height: 15,
             ),
@@ -35,7 +35,7 @@ class _pay_calculatorState extends State<pay_calculator> {
               decoration: InputDecoration(
                   labelText: "Number of hours worked",
                   labelStyle:
-                      TextStyle(fontSize: 15, color: Colors.grey.shade400),
+                      TextStyle(fontSize: 15, color: Colors.pink.shade400),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
             ),
@@ -62,18 +62,18 @@ class _pay_calculatorState extends State<pay_calculator> {
                 hrs = double.parse(noOfHours.text);
                 rate = double.parse(hourlyRate.text);
                 if (hrs <= 40) {
-                  pay = hrs * rate;
+                  pay = (hrs * rate).toString();
                 } else {
-                  pay = (hrs - 40) * rate * 1.5 + 40 * rate;
+                  pay = ((hrs - 40) * rate * 1.5 + 40 * rate).toString();
                 }
-                taxcal = pay * 0.18;
+                taxcal = (pay * 0.18).toString();
               },
               child: Container(
                 alignment: Alignment.center,
                 height: size.height / 14,
-                width: size.width,
+                width: size.width / 2,
                 decoration: BoxDecoration(
-                    color: Colors.red, borderRadius: BorderRadius.circular(5)),
+                    color: Colors.blue, borderRadius: BorderRadius.circular(8)),
                 child: Text(
                   "calculate",
                   style: TextStyle(
@@ -84,7 +84,9 @@ class _pay_calculatorState extends State<pay_calculator> {
             const SizedBox(
               height: 20,
             ),
-
+            const SizedBox(
+              height: 30,
+            ),
             Text('regular pay:$pay'),
             const SizedBox(
               height: 20,
@@ -102,7 +104,7 @@ class _pay_calculatorState extends State<pay_calculator> {
             const SizedBox(
               height: 122,
             ),
-            Text('Name:')
+            Text('Employee Name:')
           ],
         ),
       ),
