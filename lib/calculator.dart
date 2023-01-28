@@ -1,5 +1,6 @@
 // ignore: camel_case_types
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class pay_calculator extends StatefulWidget {
   const pay_calculator({super.key});
@@ -10,24 +11,24 @@ class pay_calculator extends StatefulWidget {
 
 // ignore: camel_case_types
 class _pay_calculatorState extends State<pay_calculator> {
+  final noOfHours = TextEditingController();
+  final hourlyRate = TextEditingController();
+  late double hrs;
+  dynamic rate;
+  dynamic taxCal;
+  dynamic pay;
   @override
   Widget build(BuildContext context) {
-    final noOfHours = TextEditingController();
-    final hourlyRate = TextEditingController();
     var size = MediaQuery.of(context).size;
-    double hrs;
-    double rate;
-    var taxcal;
-    var pay;
     return Scaffold(
         body: SafeArea(
       // ignore: avoid_unnecessary_containers
       child: Container(
         child: Column(
           children: [
-            Text("Pay calculator",
+            const Text("Pay calculator",
                 style: TextStyle(fontSize: 30, color: Colors.black87)),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextField(
@@ -39,10 +40,10 @@ class _pay_calculatorState extends State<pay_calculator> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextField(
@@ -50,34 +51,42 @@ class _pay_calculatorState extends State<pay_calculator> {
               decoration: InputDecoration(
                   labelText: "Hourly Rate",
                   labelStyle:
-                      TextStyle(fontSize: 15, color: Colors.grey.shade400),
+                      TextStyle(fontSize: 15, color: Colors.pink.shade400),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            GestureDetector(
-              onTap: () {
-                hrs = double.parse(noOfHours.text);
-                rate = double.parse(hourlyRate.text);
-                if (hrs <= 40) {
-                  pay = (hrs * rate).toString();
-                } else {
-                  pay = ((hrs - 40) * rate * 1.5 + 40 * rate).toString();
+
+            TextButton(
+              onPressed: () {
+                try {
+                  hrs = double.parse(noOfHours.text);
+                  rate = double.parse(hourlyRate.text);
+                  if (hrs <= 40) {
+                    pay = (hrs * rate).toDouble();
+                  } else {
+                    pay = ((hrs - 40) * rate * 1.5 + 40 * rate).toDouble();
+                  }
+                  taxCal = (pay * 0.18).toDouble();
+                } on Exception catch (e) {
+                  // TODO
                 }
-                taxcal = (pay * 0.18).toString();
               },
               child: Container(
+                color: Colors.blue,
                 alignment: Alignment.center,
                 height: size.height / 14,
                 width: size.width / 2,
-                decoration: BoxDecoration(
-                    color: Colors.blue, borderRadius: BorderRadius.circular(8)),
-                child: Text(
-                  "calculate",
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: const Text(
+                  'Calculate',
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 13.0,
+                  ),
                 ),
               ),
             ),
@@ -87,24 +96,42 @@ class _pay_calculatorState extends State<pay_calculator> {
             const SizedBox(
               height: 30,
             ),
-            Text('regular pay:$pay'),
+            Text('regular pay:$pay',
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold)),
             const SizedBox(
               height: 20,
             ),
-            Text('overtime pay:$pay'),
+            Text(
+              'overtime pay:$pay',
+              style: const TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(
               height: 20,
             ),
-            Text('total pay:$pay'),
+            Text(
+              'total pay:$pay',
+              style: const TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(
               height: 20,
             ),
-            Text('tax:$taxcal'),
+            Text(
+              'tax:$taxCal',
+              style: const TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold),
+            ),
             // display your text
             const SizedBox(
               height: 122,
             ),
-            Text('Employee Name:')
+            const Text(
+              'Employee Name:',
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            )
           ],
         ),
       ),
